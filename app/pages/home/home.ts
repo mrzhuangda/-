@@ -19,7 +19,7 @@ export class HomePage {
     this.local = new Storage(LocalStorage);
     this.local.get('citys').then((result) => {
       this.citys = JSON.parse(result);
-      // console.log(this.citys);
+      console.log(this.citys);
 
     });
     // this.citys=[

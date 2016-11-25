@@ -20,6 +20,7 @@ export class Add {
         cityAqiQlty: '',
         cityAqi: '',
         wind: '',
+        weatherImage:''
 
     }
     local: Storage;
@@ -74,19 +75,39 @@ export class Add {
                 this.city.cityAqiQlty = results.aqi.city.qlty;
                 this.city.cityAqi = results.aqi.city.aqi;
                 this.city.wind = results.now.wind.dir;
-               
+                 // if(this.city.cityWeather == "多云"){
+                 //     this.city.weatherImage = 'duoyun'
+                 // }
+                 switch (this.city.cityWeather) {
+                    case '晴转多云' :
+                    case '多云' :  this.city.weatherImage = 'duoyun';break;
+                    case '小雨' : 
+                    case '阵雨' :
+                    case '阴转阵雨' :
+                     this.city.weatherImage = 'xiaoyu';break;
+                    case '多云转晴':
+                    case '晴' :  this.city.weatherImage = 'qing';break;
+                    case '阴' :  this.city.weatherImage = 'yin';break;
+                     
+                 } 
                 if (this.citys.length == 0) {
-                    this.citys.unshift(this.city);//添加的前面展示
+                    this.citys.push(this.city);//添加的前面展示
                 } else {
                     let arr = [];
                     for (var index = 0; index < this.citys.length; index++) {
-                        arr.unshift(this.citys[index].cityId);
+                        arr.push(this.citys[index].cityId);
                     }
                     let arrs = arr.join();
                     if (arr.indexOf(this.city.cityId) == -1) {
-                        this.citys.unshift(this.city);
+                        this.citys.push(this.city);
                     } else {
-                        console.log('已存在该城市!');
+                        let toastF= Toast.create({
+                    message: '已存在该城市!',
+                    duration: 2000,
+                    position: 'bottom'
+                });
+                this.navCtrl.present(toastF);
+                  return false;
                     }
                 }
             
@@ -110,6 +131,13 @@ export class Add {
                 return false;
             }
             this.viewCtrl.dismiss(this.citys);
+        },error =>{
+             let toastFailed = Toast.create({
+                    message: '获取数据失败!',
+                    duration: 2000,
+                    position: 'bottom'
+                });
+                this.navCtrl.present(toastFailed);
         });
     }
 }

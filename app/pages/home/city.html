@@ -5,7 +5,8 @@
 </ion-header>
 
 <ion-content padding class="city">
-  <p>天气：{{city.cityWeather}}</p>
+ 
+  <p>天气：{{city.cityWeather}} </p>
   <p>实时温度：{{city.cityTemp}}°C</p>
   <p>相对湿度：{{city.cityRH}}%</p>
   <p>空气质量：{{city.cityAqiQlty}}</p>
@@ -14,4 +15,5 @@
   <p>气压：{{city.cityPres}}hPa</p>
   <p>更新时间：{{city.cityUpdate}}</p>
   <p>风向：{{city.wind}}</p>
+   <div class="image"><img src="../images/{{city.weatherImage}}.png"   alt=""></div>
 </ion-content>
